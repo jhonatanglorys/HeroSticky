@@ -1,10 +1,41 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'app';
+export class AppComponent implements OnInit{
+  
+  drugs: Object;
+
+  
+  constructor(private http:HttpClient){
+    }
+  ngOnInit():void{
+    this.http.get<Object>('../assets/datos.json').subscribe(
+      data => {
+        this.drugs = data;
+      }
+    )
+  }
+  
+}
+// When the user scrolls the page, execute myFunction 
+window.onscroll = function() {myFunction()};
+
+// Get the navbar
+var navbar = document.getElementById("navbar");
+
+// Get the offset position of the navbar
+var sticky = navbar.offsetTop;
+
+// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
 }
